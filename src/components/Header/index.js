@@ -1,351 +1,114 @@
 import {Component} from 'react'
+
 import {Link, withRouter} from 'react-router-dom'
-import Cookies from 'js-cookie'
-import {GiHamburgerMenu} from 'react-icons/gi'
+import {FaBars} from 'react-icons/fa'
+
 import {AiFillCloseCircle} from 'react-icons/ai'
-import {HiSun, HiMoon} from 'react-icons/hi'
-//  import {BsFillMoonStarsFill, BsFillSunFill} from 'react-icons/bs'
+import Cookies from 'js-cookie'
 
 import './index.css'
-import NavItem from '../NavItem'
-import HeaderContext from '../../context/HeaderContext'
-
-const navItems = [
-  {
-    id: 1,
-    displayText: 'Home',
-    pathText: '',
-  },
-  {
-    id: 2,
-    displayText: 'Bookshelves',
-    pathText: 'shelf',
-  },
-  {
-    id: 3,
-    displayText: 'Favorites',
-    pathText: 'favorites',
-  },
-]
 
 class Header extends Component {
+  state = {
+    isClick: false,
+  }
+
   onClickLogout = () => {
     const {history} = this.props
     Cookies.remove('jwt_token')
     history.replace('/login')
   }
 
-  renderMobileNavIconsContainer = () => (
-    <HeaderContext.Consumer>
-      {value => {
-        const {updateActiveNavId, onClose, isDarkTheme, onToggleTheme} = value
-
-        const darkThemeCloseColor = isDarkTheme ? '#ffffff' : '#000000'
-        const darkThemeNavMenu = isDarkTheme ? 'dark-theme-mobile-nav-menu' : ''
-
-        const navIcon = isDarkTheme ? (
-          <HiSun size={25} color="#ffffff" />
-        ) : (
-          <HiMoon size={25} color="#64748b" />
-        )
-
-        const onChangeTheme = () => {
-          onToggleTheme()
-        }
-
-        return (
-          <div className={`nav-menu-mobile ${darkThemeNavMenu}`}>
-            <ul className="nav-menu-list-mobile">
-              {navItems.map(eachItem => (
-                <NavItem
-                  key={eachItem.id}
-                  navItemDetails={eachItem}
-                  updateActiveNavId={updateActiveNavId}
-                />
-              ))}
-              <button
-                type="button"
-                className="theme-button"
-                onClick={onChangeTheme}
-              >
-                {navIcon}
-              </button>
-              <button
-                type="button"
-                className="logout-btn"
-                onClick={this.onClickLogout}
-              >
-                Logout
-              </button>
-              <button type="button" className="close-button" onClick={onClose}>
-                <AiFillCloseCircle size={25} color={darkThemeCloseColor} />
-              </button>
-            </ul>
-          </div>
-        )
-      }}
-    </HeaderContext.Consumer>
+  nextOptions = () => (
+    <ul className="options-container">
+      <li className="nav-menu-item">
+        <Link to="/" className="nav-link">
+          Home
+        </Link>
+      </li>
+      <li className="nav-menu-item">
+        <Link to="/shelf" className="nav-link">
+          Bookshelves
+        </Link>
+      </li>
+      <button className="logout-desktop-button" type="button">
+        Logout
+      </button>
+      <button
+        type="button"
+        className="close-button"
+        onClick={this.onClickNavbar}
+      >
+        <AiFillCloseCircle className="close-logo" />
+      </button>
+    </ul>
   )
 
-  renderDesktopNavMenu = () => (
-    <HeaderContext.Consumer>
-      {value => {
-        const {updateActiveNavId, isDarkTheme, onToggleTheme} = value
+  onClickNavbar = () => {
+    this.setState(prevState => ({
+      isClick: !prevState.isClick,
+    }))
+  }
 
-        const onClickWebsiteLogo = () => {
-          updateActiveNavId(navItems[0].id)
-        }
+  render() {
+    const {isClick} = this.state
 
-        const navIcon = isDarkTheme ? (
-          <HiSun size={25} color="#ffffff" />
-        ) : (
-          <HiMoon size={25} color="#64748b" />
-        )
-
-        const onChangeTheme = () => {
-          onToggleTheme()
-        }
-
-        return (
-          <div className="nav-bar-large-container">
-            <Link to="/">
+    return (
+      <nav className="nav-header" fixed="true">
+        <div className="nav-content">
+          <div className="navbar-mobile-logo-main-container">
+            <div className="navbar-mobile-logo-container">
+              <Link to="/">
+                <img
+                  src="https://res.cloudinary.com/dy9cgmtik/image/upload/v1644416575/Group_7731logo_nl5c9w.svg"
+                  alt="website logo"
+                  className="website-logo"
+                />
+              </Link>
+              <button
+                type="button"
+                className="nav-bars-button"
+                onClick={this.onClickNavbar}
+              >
+                <FaBars className="nav-bars" />
+              </button>
+            </div>
+            <div className="scroll-options-container">
+              {isClick && this.nextOptions()}
+            </div>
+          </div>
+          <div className="navbar-desktop-container">
+            <Link to="/" className="nav-link">
               <img
-                className="website-logo"
-                src="https://res.cloudinary.com/dinhpbueh/image/upload/v1662553813/BookHub_qnzptf.png"
+                src="https://res.cloudinary.com/dy9cgmtik/image/upload/v1644416575/Group_7731logo_nl5c9w.svg"
                 alt="website logo"
-                onClick={onClickWebsiteLogo}
+                className="website-logo"
               />
             </Link>
             <ul className="nav-menu">
-              {navItems.map(eachItem => (
-                <NavItem
-                  key={eachItem.id}
-                  navItemDetails={eachItem}
-                  updateActiveNavId={updateActiveNavId}
-                />
-              ))}
+              <li className="nav-menu-item">
+                <Link to="/" className="nav-link">
+                  Home
+                </Link>
+              </li>
+              <li className="nav-menu-item">
+                <Link to="/shelf" className="nav-link">
+                  Bookshelves
+                </Link>
+              </li>
+              <button
+                className="logout-desktop-button"
+                onClick={this.onClickLogout}
+                type="button"
+              >
+                Logout
+              </button>
             </ul>
-            <button
-              type="button"
-              className="theme-button"
-              onClick={onChangeTheme}
-            >
-              {navIcon}
-            </button>
-            <button
-              type="button"
-              className="logout-btn"
-              onClick={this.onClickLogout}
-            >
-              Logout
-            </button>
           </div>
-        )
-      }}
-    </HeaderContext.Consumer>
-  )
-
-  render() {
-    return (
-      <HeaderContext.Consumer>
-        {value => {
-          const {
-            showNavIcons,
-            onToggleIcon,
-            updateActiveNavId,
-            isDarkTheme,
-          } = value
-
-          const onClickWebsiteLogo = () => {
-            updateActiveNavId(navItems[0].id)
-          }
-
-          const headerDarkThemeBg = isDarkTheme ? 'header-dark-theme-bg' : ''
-          const darkThemeHamburger = isDarkTheme ? '#ffffff' : '#000000'
-
-          return (
-            <nav className={`nav-header ${headerDarkThemeBg}`}>
-              <div className="nav-content">
-                <div className="nav-bar-mobile-logo-container">
-                  <Link to="/">
-                    <img
-                      className="website-logo"
-                      src="https://res.cloudinary.com/dinhpbueh/image/upload/v1662553813/BookHub_qnzptf.png"
-                      alt="website logo"
-                      onClick={onClickWebsiteLogo}
-                    />
-                  </Link>
-
-                  <button
-                    type="button"
-                    className="nav-mobile-btn"
-                    onClick={onToggleIcon}
-                  >
-                    <GiHamburgerMenu size={25} color={darkThemeHamburger} />
-                  </button>
-                </div>
-
-                {this.renderDesktopNavMenu()}
-              </div>
-              {showNavIcons ? this.renderMobileNavIconsContainer() : null}
-            </nav>
-          )
-        }}
-      </HeaderContext.Consumer>
+        </div>
+      </nav>
     )
   }
 }
 
 export default withRouter(Header)
-
-/*
-import {Component} from 'react'
-import {Link, withRouter} from 'react-router-dom'
-import Cookies from 'js-cookie'
-import {GiHamburgerMenu} from 'react-icons/gi'
-import {AiFillCloseCircle} from 'react-icons/ai'
-
-import './index.css'
-import NavItem from '../NavItem'
-import HeaderContext from '../../context/HeaderContext'
-
-const navItems = [
-  {
-    id: 1,
-    displayText: 'Home',
-    pathText: '',
-  },
-  {
-    id: 2,
-    displayText: 'Bookshelves',
-    pathText: 'shelf',
-  },
-]
-
-class Header extends Component {
-  onClickLogout = () => {
-    const {history} = this.props
-    Cookies.remove('jwt_token')
-    history.replace('/login')
-  }
-
-  renderMobileNavIconsContainer = () => (
-    <HeaderContext.Consumer>
-      {value => {
-        const {activeNavId, updateActiveNavId, onClose} = value
-
-        return (
-          <div className="nav-menu-mobile">
-            <ul className="nav-menu-list-mobile">
-              {navItems.map(eachItem => (
-                <NavItem
-                  key={eachItem.id}
-                  navItemDetails={eachItem}
-                  isActive={eachItem.id === activeNavId}
-                  updateActiveNavId={updateActiveNavId}
-                />
-              ))}
-              <button
-                type="button"
-                className="logout-btn"
-                onClick={this.onClickLogout}
-              >
-                Logout
-              </button>
-              <button type="button" className="close-button" onClick={onClose}>
-                <AiFillCloseCircle size={25} />
-              </button>
-            </ul>
-          </div>
-        )
-      }}
-    </HeaderContext.Consumer>
-  )
-
-  renderDesktopNavMenu = () => (
-    <HeaderContext.Consumer>
-      {value => {
-        const {activeNavId, updateActiveNavId} = value
-
-        const onClickWebsiteLogo = () => {
-          updateActiveNavId(navItems[0].id)
-        }
-
-        return (
-          <div className="nav-bar-large-container">
-            <Link to="/">
-              <img
-                className="website-logo"
-                src="https://res.cloudinary.com/dinhpbueh/image/upload/v1662553813/BookHub_qnzptf.png"
-                alt="website logo"
-                onClick={onClickWebsiteLogo}
-              />
-            </Link>
-            <ul className="nav-menu">
-              {navItems.map(eachItem => (
-                <NavItem
-                  key={eachItem.id}
-                  navItemDetails={eachItem}
-                  isActive={eachItem.id === activeNavId}
-                  updateActiveNavId={updateActiveNavId}
-                />
-              ))}
-            </ul>
-            <button
-              type="button"
-              className="logout-btn"
-              onClick={this.onClickLogout}
-            >
-              Logout
-            </button>
-          </div>
-        )
-      }}
-    </HeaderContext.Consumer>
-  )
-
-  render() {
-    return (
-      <HeaderContext.Consumer>
-        {value => {
-          const {showNavIcons, onToggleIcon, updateActiveNavId} = value
-
-          const onClickWebsiteLogo = () => {
-            updateActiveNavId(navItems[0].id)
-          }
-
-          return (
-            <nav className="nav-header">
-              <div className="nav-content">
-                <div className="nav-bar-mobile-logo-container">
-                  <Link to="/">
-                    <img
-                      className="website-logo"
-                      src="https://res.cloudinary.com/dinhpbueh/image/upload/v1662553813/BookHub_qnzptf.png"
-                      alt="website logo"
-                      onClick={onClickWebsiteLogo}
-                    />
-                  </Link>
-
-                  <button
-                    type="button"
-                    className="nav-mobile-btn"
-                    onClick={onToggleIcon}
-                  >
-                    <GiHamburgerMenu size={30} />
-                  </button>
-                </div>
-
-                {this.renderDesktopNavMenu()}
-              </div>
-              {showNavIcons ? this.renderMobileNavIconsContainer() : null}
-            </nav>
-          )
-        }}
-      </HeaderContext.Consumer>
-    )
-  }
-}
-
-export default withRouter(Header)
-*/

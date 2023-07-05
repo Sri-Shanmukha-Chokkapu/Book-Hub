@@ -1,149 +1,59 @@
 .not-found-container {
-  min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  margin: auto;
-  padding-top: 30px;
-  width: 90%;
-  max-width: 1110px;
-}
-.not-found-image {
-  height: 200px;
-  width: 300px;
-}
-@media screen and (min-width: 768px) {
-  .not-found-image {
-    height: 300px;
-    width: 450px;
-  }
-}
-.not-found-heading {
-  font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 24px;
-  text-align: center;
-  color: #334155;
-}
-@media screen and (min-width: 768px) {
-  .not-found-heading {
-    font-size: 32px;
-    line-height: 48px;
-  }
-}
-
-.not-found-description {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 24px;
-  text-align: center;
-  color: #475569;
-}
-@media screen and (min-width: 768px) {
-  .not-found-description {
-    font-size: 20px;
-    line-height: 32px;
-  }
-}
-.go-back-to-home-btn {
-  font-family: 'Inter';
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 16px;
-  padding: 8px 16px;
-  color: #f8fafc;
-  background-color: #0284c7;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  outline: none;
-}
-@media screen and (min-width: 768px) {
-  .go-back-to-home-btn {
-    padding: 12px 24px;
-  }
-}
-.go-back-home-link {
-  text-decoration: none;
-}
-
-/*
-.not-found-container {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  margin: auto;
-  padding-top: 30px;
-  width: 90%;
-  max-width: 1110px;
+  flex-direction: column;
 }
-.not-found-image {
-  height: 200px;
-  width: 300px;
+.not-found-bg-image {
+  width: 448px;
+  height: 300px;
+  margin-bottom: 10px;
 }
-@media screen and (min-width: 768px) {
-  .not-found-image {
-    height: 300px;
-    width: 450px;
+@media screen and (max-width: 767px) {
+  .not-found-bg-image {
+    width: 225px;
+    height: 225px;
   }
 }
-.not-found-heading {
-  font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 24px;
-  text-align: center;
+.pageNotFound-heading {
+  width: 448px;
+  font-size: 32px;
   color: #334155;
-}
-@media screen and (min-width: 768px) {
-  .not-found-heading {
-    font-size: 32px;
-    line-height: 48px;
-  }
-}
-
-.not-found-description {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 24px;
+  font-family: 'Roboto';
+  font-weight: 600;
   text-align: center;
-  color: #475569;
 }
-@media screen and (min-width: 768px) {
-  .not-found-description {
+@media screen and (max-width: 767px) {
+  .pageNotFound-heading {
     font-size: 20px;
-    line-height: 32px;
+    font-weight: 400;
   }
 }
-.go-back-to-home-btn {
-  font-family: 'Inter';
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 16px;
-  padding: 8px 16px;
-  color: #f8fafc;
+.pageNotFound-description {
+  font-size: 20px;
+  color: #475569;
+  font-family: 'Roboto';
+  font-weight: 400;
+  text-align: center;
+  margin-bottom: 20px;
+}
+@media screen and (max-width: 767px) {
+  .pageNotFound-description {
+    font-size: 14px;
+  }
+}
+.notFound-button {
   background-color: #0284c7;
+  color: hsl(0, 0%, 100%);
+  font-size: 14px;
+  font-weight: 500;
   border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  outline: none;
+  border-radius: 10px;
+  padding: 16px 8px 16px 8px;
 }
-@media screen and (min-width: 768px) {
-  .go-back-to-home-btn {
-    padding: 12px 24px;
+@media screen and (max-width: 767px) {
+  .notFound-button {
+    border-radius: 8px;
+    padding: 8px, 16px, 8px, 16px;
   }
 }
-.go-back-home-link {
-  text-decoration: none;
-}
-*/
